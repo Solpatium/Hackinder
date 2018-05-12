@@ -1,8 +1,12 @@
+
+import {GiftedChat} from 'react-native-gifted-chat'
+import React from "react";
+
 class ChatComponent extends React.Component {
-    construct(props) {
+    constructor(props) {
         super(props);
         this.state = {
-            messages = []
+            messages : []
         }
         props.chat.enterIdeaRoom(props.ideaId, (messages) => {
             const appendMesssages = messages.map((message, index) => {
@@ -16,7 +20,7 @@ class ChatComponent extends React.Component {
                   avatar: 'https://placeimg.com/140/140/any'
                 }
               };
-            })
+            });
             this.setState({
                 messages: [...this.state.messages, ...appendMesssages]
             })

@@ -2,17 +2,19 @@ const io = require('socket.io-client');
 const serverUrl = '192.168.83.101:4000';
 
 class Chat {
-    construct(user, password, onConnect, onFail) {
+    static instance = null;
+    constructor(user, password, onConnect, onFail) {
+        Chat.instance = this;
         this.socket = io(serverUrl, { transports: ['websocket'] });
         this.loggedIn = false;
         this.ideaId = null;
         this.onMessages = null;  
         this.user = user;
-        socket.on('connect', () => {
+        this.socket.on('connect', () => {
             this.emit('login', {login: user, password: password});
         });
 
-        socket.on('response', (r) => {
+        this.socket.on('response', (r) => {
             if( r == 'ok' ) {
                 this.loggedIn = true;
                 onConnect();
@@ -21,7 +23,7 @@ class Chat {
             }
         });
 
-        socket.on('newMessages')
+        this.socket.on('newMessages', this.handleNewMessages)
     }
 
     enterIdeaRoom = (ideaId, onMessages) => {
@@ -43,6 +45,6 @@ class Chat {
     }
 
     emit = (name, obj) => {
-        socket.emit(name, JSON.stringify(obj));
+        this.socket.emit(name, JSON.stringify(obj));
     }
 }
