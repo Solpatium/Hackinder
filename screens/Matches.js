@@ -5,6 +5,7 @@ import { StyleSheet, ScrollView, Text, View, Alert, TouchableOpacity, Image, Dim
 import GridView from 'react-native-super-grid';
 
 import { connect } from 'react-redux';
+import { Chat } from "../Chat";
 
 
 class Matches extends React.Component {
@@ -43,7 +44,8 @@ class Matches extends React.Component {
   }
 
   pushMessages(id) {
-    console.log('clicked = ' + id)
+      const { navigate } = this.props.navigation;
+      navigate('ChatComponent', {ideaId: id, chat: Chat.instance})
   }
 }
 
