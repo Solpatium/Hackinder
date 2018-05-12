@@ -3,6 +3,10 @@ import {GiftedChat} from 'react-native-gifted-chat'
 import React from "react";
 
 export class ChatComponent extends React.Component {
+  static navigationOptions = {
+    title: 'Chat',
+  };
+
     constructor(props) {
         super(props);
         this.state = {

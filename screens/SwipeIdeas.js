@@ -57,6 +57,10 @@ class NoMoreCards extends React.Component {
 
 
 class SwipeIdeas extends React.Component {
+  static navigationOptions = {
+    title: 'Swipe!',
+  };
+
   constructor(props) {
     super(props);
     this.state = {

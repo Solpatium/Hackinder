@@ -11,6 +11,10 @@ import {
 import { connect } from 'react-redux';
 
 class CardList extends React.Component {
+  static navigationOptions = {
+    title: 'Home',
+  };
+
   pushNavigate = (path) => {
     const { navigate } = this.props.navigation;
     navigate(path)

@@ -17,6 +17,9 @@ import { connect } from 'react-redux';
 
 
 class AddProject extends React.Component {
+  static navigationOptions = {
+    title: 'Add idea',
+  };
 
   constructor(props) {
     super(props);
@@ -119,7 +122,7 @@ const styles = StyleSheet.create({
     paddingTop: 25,
     flex: 1,
   },
-  textInput: { borderColor: 'gray', borderWidth: 1 },
+  textInput: {  },
   container: {
     justifyContent: 'center',
     borderRadius: 5,

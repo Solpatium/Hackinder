@@ -58,7 +58,7 @@ class LoginPanel extends Component {
         <TextInput style={styles.input} onChangeText={(text) => this.setState({ login: text })} 
           value={this.state.login} />
         <Text>Password</Text>
-        <TextInput style={styles.input} onChangeText={(text) => this.setState({ password: text })}
+        <TextInput secureTextEntry={true} style={styles.input} onChangeText={(text) => this.setState({ password: text })}
           value={this.state.password} />
         <Button
           title="Login"
@@ -82,9 +82,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   input: {
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da', 
     height: 40,
   },
   errMsg: {

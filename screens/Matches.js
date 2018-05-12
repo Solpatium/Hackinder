@@ -9,6 +9,10 @@ import { Chat } from "../Chat";
 
 
 class Matches extends React.Component {
+  static navigationOptions = {
+    title: 'Your matches',
+  };
+
   constructor(props) {
     super(props)
     this.state = {
