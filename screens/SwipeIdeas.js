@@ -18,10 +18,10 @@ class Card extends React.Component {
                     let self =this.props;
 
                     Alert.alert(
-                        'Szczegóły',
-                        'Nazwa:' + self.title +
-                        '\nLokalizacja: '+self.localization+
-                        '\nOpis: '+ self.description,
+                        'Details',
+                        'Name:' + self.title +
+                        '\nLocalization: '+self.localization+
+                        '\nDescription: '+ self.description,
                         [
                             {text: 'OK', onPress: () => console.log('OK Pressed')},
                         ],
@@ -55,24 +55,6 @@ class NoMoreCards extends React.Component {
     }
 }
 
-const cards = [
-    {name: '1', image: 'https://media.giphy.com/media/GfXFVHUzjlbOg/giphy.gif'},
-    {name: '2', image: 'https://media.giphy.com/media/irTuv1L1T34TC/giphy.gif'},
-    {name: '3', image: 'https://media.giphy.com/media/LkLL0HJerdXMI/giphy.gif'},
-    {name: '4', image: 'https://media.giphy.com/media/fFBmUMzFL5zRS/giphy.gif'},
-    {name: '5', image: 'https://media.giphy.com/media/oDLDbBgf0dkis/giphy.gif'},
-    {name: '6', image: 'https://media.giphy.com/media/7r4g8V2UkBUcw/giphy.gif'},
-    {name: '7', image: 'https://media.giphy.com/media/K6Q7ZCdLy8pCE/giphy.gif'},
-    {name: '8', image: 'https://media.giphy.com/media/hEwST9KM0UGti/giphy.gif'},
-    {name: '9', image: 'https://media.giphy.com/media/3oEduJbDtIuA2VrtS0/giphy.gif'},
-]
-
-const cards2 = [
-    {id: '1', name: '10', image: 'https://media.giphy.com/media/12b3E4U9aSndxC/giphy.gif'},
-    {id: '1', name: '11', image: 'https://media4.giphy.com/media/6csVEPEmHWhWg/200.gif'},
-    {id: '1', name: '12', image: 'https://media4.giphy.com/media/AA69fOAMCPa4o/200.gif'},
-    {id: '1', name: '13', image: 'https://media.giphy.com/media/OVHFny0I7njuU/giphy.gif'},
-]
 const userLogin = 'przmek';
 const rootContext = 'http://192.168.83.101:3001';
 const loginPart = '?login=przemek&password=ala';
@@ -101,44 +83,30 @@ export default class SwipeIdeas extends React.Component {
 
     componentDidMount(){
             let self = this;
-            let url = rootContext+'/ideas?login=przemek&password=ala';
-            fetch(url).then(response => {
+            fetch(urlWrapper('/ideas','')).then(response => {
                 if (response.ok) {
                     const contentType = response.headers.get('Content-Type') || '';
 
                     if (contentType.includes('application/json')) {
                         response.json().then(obj => {
-                            //console.log(obj.ideas.length);
                             console.log(JSON.stringify(obj['ideas']))
-                            //console.clear()
                             let items = [];
                             let len = obj['ideas'].length;
-                            console.log(len);
                             let ideas = obj['ideas'];
                             for (var i = 0; i < len ; i++){
-
-                                console.log(i)
                                 let o = ideas[i];
-
                                 let item =  {id: o['_id'],
                                     title:o['title'],
                                     description: o['description'],
                                     image: o['image'],
                                     localization: o['localization']}
-                                console.log(item);
-                                console.log('len' + items.length);
-
                                 items.push(item)
-
-
                             }
                             self.setState({cards: items})
                             console.log(items.length);
-                            //console.log(JSON.stringify(obj));
-
                             resolve(obj);
                         }, error => {
-                           // reject(new ResponseError('Invalid JSON: ' + error.message));
+                           console.log('err while fetching')
                         });
                     }
                 }
@@ -195,14 +163,6 @@ export default class SwipeIdeas extends React.Component {
         if (this.state.cards.length - index <= CARD_REFRESH_LIMIT + 1) {
             console.log(`There are only ${this.state.cards.length - index - 1} cards left.`);
 
-            if (!this.state.outOfCards) {
-                console.log(`Adding ${cards2.length} more cards`)
-
-                this.setState({
-                    cards: this.state.cards.concat(cards2),
-                    outOfCards: true
-                })
-            }
 
         }
 
@@ -219,7 +179,7 @@ export default class SwipeIdeas extends React.Component {
                 showYup={true}
                 showNope={true}
                 yupText={"Super"}
-                nopeText={"Nieee"}
+                nopeText={"Nope"}
                 handleYup={this.handleYup}
                 handleNope={this.handleNope}
                 cardRemoved={this.cardRemoved.bind(this)}
@@ -257,4 +217,4 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     }
-})
+});
