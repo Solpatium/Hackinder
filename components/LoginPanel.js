@@ -1,45 +1,74 @@
 import React, { Component } from 'react';
 import { Text, TextInput, View, Button, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
+import { atLogin } from '../actions/appActions'
 
-// Form
-// const Form = t.form.Form;
 
-// // Form model
-// const User = t.struct({
-//   email: t.String,
-//   password: t.String,
-// });
-
-export default class LoginPanel extends Component {
+class LoginPanel extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      login: "",
-      password: ""
+      login: "maks",
+      password: "ala",
+      errorMessage: "",
     }
   }
 
   handleSubmit = () => {
-    const { navigate } = this.props.navigation;
-    navigate('Home')
+    fetch(`http://192.168.83.101:3001/login?login=${this.state.login}&password=${this.state.password}`, '')
+    .then((response) => {
+      if(response.ok){
+        return response.json()
+      }
+      throw new Error('Wrong credentials')
+    })
+    .then((response) => {
+      const { navigate } = this.props.navigation;
+      this.populateStore(response)
+      navigate('App')
+    })
+    .catch((error) => {
+      this.handleWrongCredentials(error)
+    })
+  }
+
+  handleWrongCredentials = (error) => {
+    this.setState({
+      errorMessage: error.message
+    })
+  }
+
+  populateStore = (data) => {
+    this.props.atLogin({
+      password: this.state.password,
+      login: this.state.login,
+      matches: data.matches,
+      ideas: data.ideas
+    })
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Text>Login</Text>
-        {/* <Form ref={c => this.loginform = c} type={User} /> */}
-        <TextInput style={styles.input} onChangeText={(text) => this.setState({ login: text })} />
+        <TextInput style={styles.input} onChangeText={(text) => this.setState({ login: text })} 
+          value={this.state.login} />
         <Text>Password</Text>
-        <TextInput style={styles.input} onChangeText={(text) => this.setState({ password: text })} />
+        <TextInput style={styles.input} onChangeText={(text) => this.setState({ password: text })}
+          value={this.state.password} />
         <Button
           title="Login"
           onPress={this.handleSubmit}
         />
+        <Text style={styles.errorMsg}>{this.state.errorMessage}</Text>
       </View>
     );
   }
 }
+
+const mapStateToProps = state => ({});
+
+export default connect(mapStateToProps, { atLogin })(LoginPanel)
 
 const styles = StyleSheet.create({
   container: {
@@ -53,5 +82,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: '#d6d7da', 
     height: 40,
+  },
+  errMsg: {
   }
 });

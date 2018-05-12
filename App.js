@@ -5,10 +5,16 @@ import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
 import MainNavigator from './navigation/MainNavigator'
 
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import AppReducer from './reducers/appReducers';
+
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
   };
+
+  store = createStore(AppReducer)
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
@@ -21,10 +27,12 @@ export default class App extends React.Component {
       );
     } else {
       return (
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <RootNavigation />
-        </View>
+        <Provider store={this.store}>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            <RootNavigation />
+          </View>
+        </Provider>
       );
     }
   }

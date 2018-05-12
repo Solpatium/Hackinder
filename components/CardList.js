@@ -8,20 +8,25 @@ import {
   Dimensions
 } from 'react-native';
 
-export default class CardList extends React.Component {
+import { connect } from 'react-redux';
+
+class CardList extends React.Component {
   pushNavigate = (path) => {
     const { navigate } = this.props.navigation;
     navigate(path)
   }
 
   render() {
+    console.log(this.props.userData)
     const items = [
       { name: 'IDEAS', subText: 'Search through already created ideas',
-       onClick: () => this.pushNavigate('Login'),
+        onClick: () => this.pushNavigate('Login'),
         imagePath: require('../assets/images/card-ideas.jpeg') },
-      { name: 'CREATE', subText: 'Create new idea', onClick: () => this.pushNavigate('Settings'),
+      { name: 'CREATE', subText: 'Create new idea', 
+        onClick: () => this.pushNavigate('Settings'),
         imagePath: require('../assets/images/card-create.jpeg') },
-      { name: 'YOUR MATCHES', subText: 'Lorem ipsum', onClick: () => this.pushNavigate('Settings'),
+      { name: 'YOUR MATCHES', subText: 'Lorem ipsum', 
+        onClick: () => this.pushNavigate('Settings'),
         imagePath: require('../assets/images/card-match.jpeg') },
     ];
 
@@ -37,6 +42,12 @@ export default class CardList extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return { userData: state }
+}
+
+export default connect(mapStateToProps)(CardList)
 
 const styles = StyleSheet.create({
   gridView: {
