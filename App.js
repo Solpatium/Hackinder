@@ -8,6 +8,7 @@ import MainNavigator from './navigation/MainNavigator'
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import AppReducer from './reducers/appReducers';
+console.disableYellowBox = true
 
 export default class App extends React.Component {
   state = {

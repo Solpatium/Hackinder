@@ -2,7 +2,6 @@ import React from 'react';
 import { Notifications } from 'expo';
 import { createSwitchNavigator } from 'react-navigation';
 
-import MainTabNavigator from './MainTabNavigator';
 import MainNavigator from './MainNavigator'
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
 

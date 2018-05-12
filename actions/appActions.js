@@ -4,3 +4,10 @@ export const atLogin = (userData) => {
     payload: userData
   }
 }
+
+export const atSwipe = (card) => {
+  return {
+    type: 'ADD_AFTER_SWIPE',
+    payload: card
+  }
+}

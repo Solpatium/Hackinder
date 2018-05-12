@@ -16,17 +16,20 @@ class CardList extends React.Component {
     navigate(path)
   }
 
+  componentDidMount() {
+  }
+  
   render() {
     console.log(this.props.userData)
     const items = [
       { name: 'IDEAS', subText: 'Search through already created ideas',
-        onClick: () => this.pushNavigate('Login'),
+        onClick: () => this.pushNavigate('SwipeIdeas'),
         imagePath: require('../assets/images/card-ideas.jpeg') },
       { name: 'CREATE', subText: 'Create new idea', 
-        onClick: () => this.pushNavigate('Settings'),
+        onClick: () => this.pushNavigate('Home'),
         imagePath: require('../assets/images/card-create.jpeg') },
       { name: 'YOUR MATCHES', subText: 'Lorem ipsum', 
-        onClick: () => this.pushNavigate('Settings'),
+        onClick: () => this.pushNavigate('Matches'),
         imagePath: require('../assets/images/card-match.jpeg') },
     ];
 
