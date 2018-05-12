@@ -9,9 +9,15 @@ import { Chat } from "../Chat";
 
 
 class Matches extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      matches: []
+    }
+  }
 
   render() {
-    let ideaList = this.props.matches.map((data) => {
+    let ideaList = this.state.matches.map((data) => {
       return ({ name: data.title, loc: data.localization, color: '#367abc', image: data.image, onClick: () => this.pushMessages(data._id) })
     });
     return (
@@ -43,6 +49,31 @@ class Matches extends React.Component {
     );
   }
 
+  componentDidMount = () => {
+    fetch(`http://192.168.83.101:3001/login?login=${this.props.user.login}&password=${this.props.user.password}`, '')
+      .then((response) => {
+        if (response.ok) {
+          return response.json()
+        }
+        throw new Error('Wrong credentials')
+      })
+      .then((response) => {
+        this.setState({
+          matches: [...response.matches, ...response.ideas]
+        })
+      })
+      .catch((error) => {
+        Alert.alert(
+          '',
+          'Error: ' + error.message,
+          [
+            { text: 'OK', onPress: () => console.log('OK Pressed') },
+          ],
+          { cancelable: false }
+        )
+      })
+  }
+
   pushMessages(id) {
       const { navigate } = this.props.navigation;
       navigate('ChatComponent', {ideaId: id, chat: Chat.instance})
@@ -50,7 +81,10 @@ class Matches extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  matches: state.matches
+  user: {
+    login: state.login,
+    password: state.password
+  }
 })
 
 export default connect(mapStateToProps)(Matches)
