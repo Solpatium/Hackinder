@@ -49,7 +49,7 @@ class NoMoreCards extends React.Component {
     render() {
         return (
             <View style={styles.noMoreCards}>
-                <Text>No more cards</Text>
+                <Text>No more projects</Text>
             </View>
         )
     }
@@ -101,6 +101,7 @@ export default class SwipeIdeas extends React.Component {
                                     image: o['image'],
                                     localization: o['localization']}
                                 items.push(item)
+                                console.log(item.id + ' '+ item.title)
                             }
                             self.setState({cards: items})
                             console.log(items.length);
@@ -115,7 +116,7 @@ export default class SwipeIdeas extends React.Component {
     }
 
     handleYup (card) {
-        console.log("yes");
+        console.log("yes" + card['id'] + card['title']);
        let json = JSON.stringify({
            login: userLogin,
            projectId: card['id'],
