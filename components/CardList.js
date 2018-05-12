@@ -25,7 +25,7 @@ class CardList extends React.Component {
         onClick: () => this.pushNavigate('SwipeIdeas'),
         imagePath: require('../assets/images/card-ideas.jpeg') },
       { name: 'CREATE', subText: 'Create new idea', 
-        onClick: () => this.pushNavigate('Home'),
+        onClick: () => this.pushNavigate('Create'),
         imagePath: require('../assets/images/card-create.jpeg') },
       { name: 'YOUR MATCHES', subText: 'Lorem ipsum', 
         onClick: () => this.pushNavigate('Matches'),
