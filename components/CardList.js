@@ -20,7 +20,6 @@ class CardList extends React.Component {
   }
   
   render() {
-    console.log(this.props.userData)
     const items = [
       { name: 'IDEAS', subText: 'Search through already created ideas',
         onClick: () => this.pushNavigate('SwipeIdeas'),

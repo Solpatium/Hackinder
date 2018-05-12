@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Text, TextInput, View, Button, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { atLogin } from '../actions/appActions'
+import { Chat } from '../Chat'
+
 
 
 class LoginPanel extends Component {
@@ -24,7 +26,8 @@ class LoginPanel extends Component {
     })
     .then((response) => {
       const { navigate } = this.props.navigation;
-      this.populateStore(response)
+      this.populateStore(response);
+      new Chat(this.state.login, this.state.password, () => {console.log("succes")}, () => {console.log("error")})
       navigate('App')
     })
     .catch((error) => {
