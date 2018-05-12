@@ -203,6 +203,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderWidth: 1,
     elevation: 1,
+    padding: 5
   },
   thumbnail: {
     width: 300,
