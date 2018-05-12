@@ -15,7 +15,10 @@
     "react-native-gifted-chat": "^0.4.3",
     "react-native-super-grid": "^2.3.1",
     "react-native-swipe-cards": "^0.1.1",
-    "react-navigation": "2.0.0"
+    "react-navigation": "2.0.0",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0"
+
   },
   "devDependencies": {
     "jest-expo": "^27.0.0"
