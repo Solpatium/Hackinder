@@ -87,11 +87,12 @@ export default class SwipeIdeas extends React.Component {
         super(props);
         this.state = {
             cards: [
-                {id: '1',title:"Super projekt1", description: "super super ", image: 'https://media.giphy.com/media/GfXFVHUzjlbOg/giphy.gif', localization: "Kraków"},
+              /*  {id: '1',title:"Super projekt1", description: "super super ", image: 'https://media.giphy.com/media/GfXFVHUzjlbOg/giphy.gif', localization: "Kraków"},
                 {id: '2',title:"Super projekt2", description: "super projekt ", image: 'https://media.giphy.com/media/GfXFVHUzjlbOg/giphy.gif', localization: "Warsaw"},
                 {id: '3',title:"Super projekt3", description: "super super", image: 'https://media.giphy.com/media/GfXFVHUzjlbOg/giphy.gif', localization: "Wrocław"},
                 {id: '4',title:"Super projekt4", description: "super super", image: 'https://media.giphy.com/media/GfXFVHUzjlbOg/giphy.gif', localization: "Lublin"},
                 {id: '5',title:"Super projekt5", description: "super super", image: 'https://media.giphy.com/media/GfXFVHUzjlbOg/giphy.gif', localization: "Kraków"}
+            */
             ],
             outOfCards: false
 
@@ -99,6 +100,7 @@ export default class SwipeIdeas extends React.Component {
     }
 
     componentDidMount(){
+            let self = this;
             let url = rootContext+'/ideas?login=przemek&password=ala';
             fetch(url).then(response => {
                 if (response.ok) {
@@ -117,21 +119,20 @@ export default class SwipeIdeas extends React.Component {
 
                                 console.log(i)
                                 let o = ideas[i];
-                                JSON.stringify(o)
-                                console.log(JSON.stringify({id: o['_id'],
+
+                                let item =  {id: o['_id'],
                                     title:o['title'],
                                     description: o['description'],
                                     image: o['image'],
-                                    localization: o['localization']}))
-                                items.push(
-                                    {id: o['_id'],
-                                    title:o['title'],
-                                    description: o['description'],
-                                    image: o['image'],
-                                    localization: o['localization']})
+                                    localization: o['localization']}
+                                console.log(item);
+                                console.log('len' + items.length);
+
+                                items.push(item)
+
 
                             }
-
+                            self.setState({cards: items})
                             console.log(items.length);
                             //console.log(JSON.stringify(obj));
 
