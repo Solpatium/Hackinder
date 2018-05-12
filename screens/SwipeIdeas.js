@@ -74,8 +74,14 @@ const cards2 = [
     {id: '1', name: '13', image: 'https://media.giphy.com/media/OVHFny0I7njuU/giphy.gif'},
 ]
 const userLogin = 'przmek';
-const rootContext = 'https://mywebsite.com/endpoint//';
+const rootContext = 'http://192.168.83.101:3001';
+const loginPart = '?login=przemek&password=ala';
 
+const urlWrapper = function (endpoint, params) {
+    let url = rootContext+endpoint+loginPart+params;
+    console.log(url)
+    return url
+}
 export default class SwipeIdeas extends React.Component {
     constructor(props) {
         super(props);
@@ -92,6 +98,53 @@ export default class SwipeIdeas extends React.Component {
         }
     }
 
+    componentDidMount(){
+            let url = rootContext+'/ideas?login=przemek&password=ala';
+            fetch(url).then(response => {
+                if (response.ok) {
+                    const contentType = response.headers.get('Content-Type') || '';
+
+                    if (contentType.includes('application/json')) {
+                        response.json().then(obj => {
+                            //console.log(obj.ideas.length);
+                            console.log(JSON.stringify(obj['ideas']))
+                            //console.clear()
+                            let items = [];
+                            let len = obj['ideas'].length;
+                            console.log(len);
+                            let ideas = obj['ideas'];
+                            for (var i = 0; i < len ; i++){
+
+                                console.log(i)
+                                let o = ideas[i];
+                                JSON.stringify(o)
+                                console.log(JSON.stringify({id: o['_id'],
+                                    title:o['title'],
+                                    description: o['description'],
+                                    image: o['image'],
+                                    localization: o['localization']}))
+                                items.push(
+                                    {id: o['_id'],
+                                    title:o['title'],
+                                    description: o['description'],
+                                    image: o['image'],
+                                    localization: o['localization']})
+
+                            }
+
+                            console.log(items.length);
+                            //console.log(JSON.stringify(obj));
+
+                            resolve(obj);
+                        }, error => {
+                           // reject(new ResponseError('Invalid JSON: ' + error.message));
+                        });
+                    }
+                }
+            });
+
+    }
+
     handleYup (card) {
         console.log("yes");
        let json = JSON.stringify({
@@ -101,7 +154,8 @@ export default class SwipeIdeas extends React.Component {
            }
        );
        console.log(json);
-        fetch(rootContext, {
+
+        fetch(urlWrapper(`/swipe/${card['id']}/right/`, ''), {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -113,16 +167,16 @@ export default class SwipeIdeas extends React.Component {
     }
 
     handleNope (card) {
-        console.log(JSON.stringify(card))
         console.log("nope");
         let json = JSON.stringify({
                 login: userLogin,
                 projectId: card['id'],
-                answer:false
+                answer: false
             }
         );
         console.log(json);
-        fetch(rootContext , {
+
+        fetch(urlWrapper(`/swipe/${card['id']}/left/`, ''), {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -130,7 +184,6 @@ export default class SwipeIdeas extends React.Component {
             },
             body: json,
         });
-
     }
 
     cardRemoved (index) {
