@@ -39,6 +39,7 @@ class LoginPanel extends Component {
   }
 
   populateStore = (data) => {
+    console.log(data)
     this.props.atLogin({
       password: this.state.password,
       login: this.state.login,

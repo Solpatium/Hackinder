@@ -20,13 +20,13 @@ class CardList extends React.Component {
   }
   
   render() {
-    console.log(this.props.userData)
+    // console.log(this.props.userData)
     const items = [
       { name: 'IDEAS', subText: 'Search through already created ideas',
         onClick: () => this.pushNavigate('SwipeIdeas'),
         imagePath: require('../assets/images/card-ideas.jpeg') },
       { name: 'CREATE', subText: 'Create new idea', 
-        onClick: () => this.pushNavigate('Home'),
+        onClick: () => this.pushNavigate('Create'),
         imagePath: require('../assets/images/card-create.jpeg') },
       { name: 'YOUR MATCHES', subText: 'Lorem ipsum', 
         onClick: () => this.pushNavigate('Matches'),
