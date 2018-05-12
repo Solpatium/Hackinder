@@ -40,10 +40,6 @@ export default class HomeScreen extends React.Component {
             <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
               <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
             </View>
-
-            <Text style={styles.getStartedText}>
-              RUCHAM PSA JAK SRA xD
-            </Text>
           </View>
 
           <View style={styles.helpContainer}>
