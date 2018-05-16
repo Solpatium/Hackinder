@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Text, TextInput, View, Button, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { atLogin } from '../actions/appActions'
-import { Chat } from '../Chat'
-
+import { Chat } from '../utils/chat'
+import { API } from '../utils/api'
 
 
 class LoginPanel extends Component {
@@ -17,17 +17,18 @@ class LoginPanel extends Component {
   }
 
   handleSubmit = () => {
-    fetch(`http://192.168.83.101:3001/login?login=${this.state.login}&password=${this.state.password}`, '')
-    .then((response) => {
-      if(response.ok){
-        return response.json()
-      }
-      throw new Error('Wrong credentials')
-    })
+    API.createInstance(this.state.login, this.state.password).login()
+    // fetch(`http://192.168.83.101:3001/login?login=${this.state.login}&password=${this.state.password}`, '')
+    // .then((response) => {
+    //   if(response.ok){
+    //     return response.json()
+    //   }
+    //   throw new Error('Wrong credentials')
+    // })
     .then((response) => {
       const { navigate } = this.props.navigation;
-      this.populateStore(response);
-      new Chat(this.state.login, this.state.password, () => {console.log("succes")}, () => {console.log("error")})
+      // this.populateStore(response);
+      Chat.createInstance(this.state.login, this.state.password, () => {console.log("succes")}, () => {console.log("error")})
       navigate('App')
     })
     .catch((error) => {

@@ -1,0 +1,1 @@
+export const serverUrl = '192.168.1.146:4000';

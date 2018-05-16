@@ -1,19 +1,24 @@
-const io = require('socket.io-client');
-const serverUrl = 'http://192.168.83.101:4000';
+import io from 'socket.io-client';
+import {serverUrl} from '../config';
 
 export class Chat {
     static instance = null;
+
+    static createInstance(user, password, onConnect, onFail) {
+        Chat.instance = new Chat(user, password, onConnect, onFail);
+    }
+
+    static getInstance() {
+        return Chat.instance;
+    }
+
     constructor(user, password, onConnect, onFail) {
-        Chat.instance = this;
         this.socket = io(serverUrl, { transports: ['websocket'] });
         this.loggedIn = false;
         this.ideaId = null;
         this.onMessages = null;  
         this.user= user;
-        // this.socket.on('connect', () => {
-            this.emit('login', {login: user, password: password});
-            // console.log('connected')
-        // });
+        this.emit('login', {login: user, password: password});
 
         this.socket.on('response', (r) => {
             if( r == 'ok' ) {
