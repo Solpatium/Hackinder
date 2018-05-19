@@ -1,13 +1,10 @@
 import React from 'react';
 import {
   StyleSheet,
-  ScrollView,
   Text,
   View,
   Alert,
-  TouchableOpacity,
   Image,
-  Dimensions,
   TextInput,
   Button,
 } from 'react-native';
@@ -61,28 +58,38 @@ export default class AddProject extends React.Component {
   render() {
     return (
       <View style={[styles.container, { justifyContent: 'space-between' }]}>
+        <Image style={styles.backgroundImage} source={require('../assets/images/background.png')} />
 
-        <Text style={styles.itemName}>Title</Text>
-        <TextInput
-          style={[styles.textInput, { height: 40 }]}
-          onChangeText={title => this.setState({ title })}
-          value={this.state.title}
-          placeholder="Name your idea"
-        />
-        <Text style={styles.itemName}>Description</Text>
-        <TextInput
-          multiline
-          numberOfLines={20}
-          style={styles.textInput}
-          onChangeText={desc => this.setState({ description: desc })}
-          value={this.state.description}
-          placeholder="Tell something about your idea"
-        />
+        <View style={styles.itemContainer}>
+          <Text style={styles.itemName}>Title</Text>
+          <TextInput
+            underlineColorAndroid="transparent"
+            style={[styles.input, { height: 40 }]}
+            onChangeText={title => this.setState({ title })}
+            value={this.state.title}
+            placeholder="Name your idea"
+          />
+        </View>
+
+
+        <View style={[styles.itemContainer, { height: 360 }]}>
+          <Text style={styles.itemName}>Description</Text>
+          <TextInput
+            underlineColorAndroid="transparent"
+            multiline
+            numberOfLines={20}
+            style={[styles.input, { height: 300 }]}
+            onChangeText={desc => this.setState({ description: desc })}
+            value={this.state.description}
+            placeholder="Tell something about your idea"
+          />
+
+        </View>
 
         <Button
           onPress={this.handleAdd}
           title="Register idea!"
-          color="#375f64"
+          color="rgba(255, 84, 107, 0.8)"
         />
       </View>)
   }
@@ -93,24 +100,51 @@ const styles = StyleSheet.create({
     paddingTop: 25,
     flex: 1,
   },
-  textInput: { },
+  inputView: {
+    backgroundColor: 'rgba(0,0,0,0)',
+    position: 'absolute',
+    top: 0,
+    left: 5,
+    right: 5,
+  },
+  input: {
+    height: 36,
+    padding: 10,
+    marginTop: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    fontSize: 18,
+    borderWidth: 0,
+    borderRadius: 10,
+    backgroundColor: 'transparent',
+    textAlign: 'center',
+  },
   container: {
     justifyContent: 'center',
-    borderRadius: 5,
-    padding: 10,
+    backgroundColor: 'rgba(0,0,0,0)',
+    height: '100%',
 
+  },
+  itemContainer: {
+    borderRadius: 30,
+    marginTop: 20,
+    height: 90,
+    backgroundColor: 'rgba(255, 84, 107, 0.1)',
 
   },
   itemName: {
     fontSize: 20,
-    color: '#000000',
+    color: '#fff',
     fontWeight: '600',
-    alignItems: 'center',
+    textAlign: 'center',
   },
   itemCode: {
     fontWeight: '600',
     fontSize: 20,
     color: '#fff',
   },
-
+  backgroundImage: {
+    flex: 1,
+    position: 'absolute',
+  },
 });

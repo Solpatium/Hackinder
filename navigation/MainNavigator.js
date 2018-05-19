@@ -1,7 +1,7 @@
 import {
   createSwitchNavigator,
   createStackNavigator,
-} from 'react-navigation';
+} from 'react-navigation'
 import LoginPanel from '../components/LoginPanel';
 import CardList from '../components/CardList';
 import Matches from '../screens/Matches';
@@ -16,10 +16,11 @@ const AppStack = createStackNavigator({
   Create: AddProject,
   SwipeIdeas,
   ChatComponent,
-});
-const AuthStack = createStackNavigator({
-  Login: LoginPanel,
-});
+})
+
+const AuthStack = createSwitchNavigator({
+  Login: { screen: LoginPanel, header: { visible: false } },
+})
 
 export default createSwitchNavigator(
   {

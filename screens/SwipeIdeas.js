@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Alert, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, Alert, TouchableOpacity, Image, ScrollView } from 'react-native';
+
 import SwipeCards from 'react-native-swipe-cards';
 import API from '../utils/api'
 
@@ -81,51 +82,75 @@ export default class SwipeIdeas extends React.Component {
 
   render() {
     return (
-      <SwipeCards
-        cards={this.state.cards}
-        loop={false}
-        renderCard={cardData => <Card {...cardData} />}
-        renderNoMoreCards={() => <NoMoreCards />}
-        showYup
-        showNope
-        yupText="Super"
-        nopeText="Nope"
-        handleYup={this.handleYup}
-        handleNope={this.handleNope}
-        cardRemoved={this.cardRemoved.bind(this)}
-      />
+      <View styles={{ height: '100%' }}>
+        <Image style={styles.backgroundImage} source={require('../assets/images/background.png')} />
+        <ScrollView style={styles.container}>
+          <SwipeCards
+            cards={this.state.cards}
+            containerStyle={this.styles.cardContainer}
+            loop={false}
+            renderCard={cardData => <Card {...cardData} />}
+            renderNoMoreCards={() => <NoMoreCards />}
+            showYup
+            showNope
+            yupText="Super"
+            nopeText="Nope"
+            handleYup={this.handleYup}
+            handleNope={this.handleNope}
+            cardRemoved={this.cardRemoved.bind(this)}
+          />
+        </ScrollView>
+
+      </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
   card: {
+    marginTop: 20,
+    marginBottom: 20,
     alignItems: 'center',
-    borderRadius: 5,
+    borderRadius: 30,
     overflow: 'hidden',
     borderColor: 'grey',
-    backgroundColor: 'white',
-    borderWidth: 1,
+    backgroundColor: 'rgba(15, 208, 183, 0.1)',
+    borderWidth: 0,
     elevation: 1,
-    padding: 5,
+    padding: 0,
   },
   thumbnail: {
     width: 300,
-    height: 300,
+    height: 400,
   },
   text: {
     fontSize: 20,
     paddingTop: 10,
     paddingBottom: 10,
+    textAlign: 'center',
   },
   details: {
     fontSize: 12,
     paddingTop: 10,
     paddingBottom: 10,
+    textAlign: 'center',
   },
   noMoreCards: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  backgroundImage: {
+    flex: 1,
+    position: 'absolute',
+  },
+  container: {
+    height: '100%',
+    backgroundColor: 'transparent',
+
+  },
+  cardContainer: {
+    height: '100%',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
   },
 });

@@ -4,7 +4,7 @@ import {
   View,
   Text,
   StyleSheet,
-  Dimensions,
+  Dimensions, Image, ScrollView,
 } from 'react-native';
 import Card from './Card'
 
@@ -21,41 +21,64 @@ export default class CardList extends React.Component {
   render() {
     const items = [
       {
-        name: 'IDEAS',
-        subText: 'Search through already created ideas',
-        onClick: () => this.pushNavigate('SwipeIdeas'),
-        imagePath: require('../assets/images/card-ideas.jpeg'),
-      },
-      {
         name: 'CREATE',
         subText: 'Create new idea',
         onClick: () => this.pushNavigate('Create'),
-        imagePath: require('../assets/images/card-create.jpeg'),
+        color: '#ff546b',
+        imagePath: require('../assets/images/light-bulb.png'),
       },
       {
-        name: 'YOUR MATCHES',
+        name: 'EXPLORE',
+        subText: 'Search through already created ideas',
+        color: '#0fd0b7',
+        onClick: () => this.pushNavigate('SwipeIdeas'),
+        imagePath: require('../assets/images/MB__search.png'),
+      },
+      {
+        name: 'TEAM UP',
         subText: 'Lorem ipsum',
+        color: '#0bd5de',
         onClick: () => this.pushNavigate('Matches'),
-        imagePath: require('../assets/images/card-match.jpeg'),
+        imagePath: require('../assets/images/messages.png'),
       },
     ];
 
     return (
-      <GridView
-        itemDimension={Dimensions.get('window').width - 75}
-        items={items}
-        style={styles.gridView}
-        renderItem={item => (
-          <Card name={item.name} subText={item.subText} imagePath={item.imagePath} onClick={item.onClick} />
-        )}
-      />
+      <View>
+        <Image style={styles.backgroundImage} source={require('../assets/images/background.png')} />
+        <ScrollView style={styles.container}>
+          <GridView
+            itemDimension={Dimensions.get('window').width - 75}
+            items={items}
+            style={styles.gridView}
+            renderItem={item => (
+              <Card
+                color={item.color}
+                name={item.name}
+                subText={item.subText}
+                imagePath={item.imagePath}
+                onClick={item.onClick}
+              />
+            )}
+          />
+        </ScrollView>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+    backgroundColor: 'transparent',
+  },
   gridView: {
-    paddingTop: 25,
     flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'transparent',
+  },
+  backgroundImage: {
+    flex: 1,
+    position: 'absolute',
   },
 });
