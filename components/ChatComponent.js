@@ -2,7 +2,7 @@ import React from 'react';
 import { GiftedChat } from 'react-native-gifted-chat'
 import { Image, StyleSheet, View } from 'react-native';
 
-export class ChatComponent extends React.Component {
+export default class ChatComponent extends React.Component {
   static navigationOptions = {
     title: 'Chat',
   };

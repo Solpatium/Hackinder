@@ -14,7 +14,7 @@ export default function Card(props) {
 
       <View style={styles.container}>
         <Image
-          source={this.props.imagePath}
+          source={props.imagePath}
           style={styles.cardImage}
         />
         <View style={styles.textContainer}>

@@ -87,7 +87,7 @@ export default class SwipeIdeas extends React.Component {
         <ScrollView style={styles.container}>
           <SwipeCards
             cards={this.state.cards}
-            containerStyle={this.styles.cardContainer}
+            containerStyle={styles.cardContainer}
             loop={false}
             renderCard={cardData => <Card {...cardData} />}
             renderNoMoreCards={() => <NoMoreCards />}
