@@ -12,6 +12,7 @@ export class Chat {
         return Chat.instance;
     }
 
+    // TODO: add connect(onConnect, onFail) method, change constructor to constructor(user, password) 
     constructor(user, password, onConnect, onFail) {
         this.socket = io(serverUrl, { transports: ['websocket'] });
         this.loggedIn = false;

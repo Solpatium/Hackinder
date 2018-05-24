@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import {
   StyleSheet,
@@ -11,12 +9,11 @@ import {
   Image,
   Dimensions,
   TextInput,
-  Button
+  Button,
 } from 'react-native';
-import { connect } from 'react-redux';
+import API from '../utils/api'
 
-
-class AddProject extends React.Component {
+export default class AddProject extends React.Component {
   static navigationOptions = {
     title: 'Add idea',
   };
@@ -27,8 +24,38 @@ class AddProject extends React.Component {
       title: null,
       description: null,
       image: 'https://picsum.photos/303',
-      localization: 'Cracow'
+      localization: 'Cracow',
     }
+  }
+
+  handleAdd = () => {
+    API.getInstance().addIdea(this.state)
+      .then((response) => {
+        if (response.ok) {
+          Alert.alert(
+            '',
+            'Added new project',
+            [
+              { text: 'OK', onPress: () => console.log('OK Pressed') },
+            ],
+            { cancelable: false }
+          )
+        } else {
+          Alert.alert(
+            '',
+            `Error: ${JSON.stringify(response)}`,
+            [
+              { text: 'OK', onPress: () => console.log('OK Pressed') },
+            ],
+            { cancelable: false }
+          )
+        }
+      });
+
+    this.setState({
+      title: null,
+      description: null,
+    })
   }
 
   render() {
@@ -37,19 +64,19 @@ class AddProject extends React.Component {
 
         <Text style={styles.itemName}>Title</Text>
         <TextInput
-          style={[styles.textInput, {height: 40}]}
-          onChangeText={(title) => this.setState({ title: title })}
+          style={[styles.textInput, { height: 40 }]}
+          onChangeText={title => this.setState({ title })}
           value={this.state.title}
-          placeholder={'Name your idea'}
+          placeholder="Name your idea"
         />
         <Text style={styles.itemName}>Description</Text>
         <TextInput
-          multiline={true}
+          multiline
           numberOfLines={20}
           style={styles.textInput}
-          onChangeText={(desc) => this.setState({ description: desc })}
+          onChangeText={desc => this.setState({ description: desc })}
           value={this.state.description}
-          placeholder={'Tell something about your idea'}
+          placeholder="Tell something about your idea"
         />
 
         <Button
@@ -58,71 +85,15 @@ class AddProject extends React.Component {
           color="#375f64"
         />
       </View>)
-
-  }
-
-  urlWrapper = (endpoint, params) => {
-    const rootContext = 'http://192.168.83.101:3001';
-    const loginPart = `?login=${this.props.user.login}&password=${this.props.user.password}`;
-    let url = rootContext + endpoint + loginPart + params;
-    console.log(url)
-    return url
-  }
-
-  handleAdd = () => {
-    console.log(JSON.stringify(this.state));
-    fetch(this.urlWrapper(`/ideas/`, ''), {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(this.state),
-    }).then((response) => {
-      if (response.ok) {
-        Alert.alert(
-          '',
-          'Added new project',
-          [
-            { text: 'OK', onPress: () => console.log('OK Pressed') },
-          ],
-          { cancelable: false }
-        )
-      } else {
-        Alert.alert(
-          '',
-          'Error: ' + JSON.stringify(response),
-          [
-            { text: 'OK', onPress: () => console.log('OK Pressed') },
-          ],
-          { cancelable: false }
-        )
-      }
-    });
-
-    this.setState({
-      title: null,
-      description: null,
-    })
-
   }
 }
-
-const mapStateToProps = state => ({
-  user: {
-    login: state.login,
-    password: state.password
-  }
-})
-
-export default connect(mapStateToProps)(AddProject)
 
 const styles = StyleSheet.create({
   gridView: {
     paddingTop: 25,
     flex: 1,
   },
-  textInput: {  },
+  textInput: { },
   container: {
     justifyContent: 'center',
     borderRadius: 5,
@@ -134,7 +105,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#000000',
     fontWeight: '600',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   itemCode: {
     fontWeight: '600',

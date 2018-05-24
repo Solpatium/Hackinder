@@ -1,16 +1,14 @@
 import React from 'react'
 import GridView from 'react-native-super-grid'
-import Card from './Card'
 import {
   View,
   Text,
   StyleSheet,
-  Dimensions
+  Dimensions,
 } from 'react-native';
+import Card from './Card'
 
-import { connect } from 'react-redux';
-
-class CardList extends React.Component {
+export default class CardList extends React.Component {
   static navigationOptions = {
     title: 'Home',
   };
@@ -20,20 +18,26 @@ class CardList extends React.Component {
     navigate(path)
   }
 
-  componentDidMount() {
-  }
-  
   render() {
     const items = [
-      { name: 'IDEAS', subText: 'Search through already created ideas',
+      {
+        name: 'IDEAS',
+        subText: 'Search through already created ideas',
         onClick: () => this.pushNavigate('SwipeIdeas'),
-        imagePath: require('../assets/images/card-ideas.jpeg') },
-      { name: 'CREATE', subText: 'Create new idea', 
+        imagePath: require('../assets/images/card-ideas.jpeg'),
+      },
+      {
+        name: 'CREATE',
+        subText: 'Create new idea',
         onClick: () => this.pushNavigate('Create'),
-        imagePath: require('../assets/images/card-create.jpeg') },
-      { name: 'YOUR MATCHES', subText: 'Lorem ipsum', 
+        imagePath: require('../assets/images/card-create.jpeg'),
+      },
+      {
+        name: 'YOUR MATCHES',
+        subText: 'Lorem ipsum',
         onClick: () => this.pushNavigate('Matches'),
-        imagePath: require('../assets/images/card-match.jpeg') },
+        imagePath: require('../assets/images/card-match.jpeg'),
+      },
     ];
 
     return (
@@ -49,15 +53,9 @@ class CardList extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return { userData: state }
-}
-
-export default connect(mapStateToProps)(CardList)
-
 const styles = StyleSheet.create({
   gridView: {
     paddingTop: 25,
     flex: 1,
-  }
+  },
 });
