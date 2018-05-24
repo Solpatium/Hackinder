@@ -1,15 +1,15 @@
 import React from 'react'
-import { 
-  View, 
+import {
+  View,
   Text,
   Image,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 
 export default class Card extends React.Component {
-  render () {
-    return(
+  render() {
+    return (
       <TouchableOpacity onPress={() => this.props.onClick()}>
         <View style={styles.container}>
           <Image
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     height: 150,
-    backgroundColor: '#2c3e50'
+    backgroundColor: '#2c3e50',
   },
   cardName: {
     fontSize: 16,
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   cardImage: {
-    width: "100%",
-    height: 100
-  }
+    width: '100%',
+    height: 100,
+  },
 })

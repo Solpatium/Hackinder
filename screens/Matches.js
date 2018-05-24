@@ -1,29 +1,57 @@
-'use strict';
-
 import React from 'react';
 import { StyleSheet, ScrollView, Text, View, Alert, TouchableOpacity, Image, Dimensions } from 'react-native';
 import GridView from 'react-native-super-grid';
 
-import { connect } from 'react-redux';
-import { Chat } from "../Chat";
+import { Chat } from '../utils/chat';
+import API from '../utils/api';
 
 
-class Matches extends React.Component {
+export default class Matches extends React.Component {
   static navigationOptions = {
     title: 'Your matches',
   };
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      matches: []
-    }
+      matches: [],
+    };
+  }
+
+  componentDidMount = () => {
+    API.getInstance().getMatches()
+      .then((response) => {
+        if (!response.matches) {
+          response.matches = []
+        }
+        if (!response.ideas) {
+          response.ideas = []
+        }
+        this.setState({
+          matches: [...response.matches, ...response.ideas],
+        });
+      })
+      .catch((error) => {
+        Alert.alert(
+          '',
+          `Error: ${error.message}`,
+          [
+            { text: 'OK', onPress: () => console.log('OK Pressed') },
+          ],
+          { cancelable: false },
+        );
+      });
+  }
+
+  pushMessages(id) {
+    const { navigate } = this.props.navigation;
+    navigate('ChatComponent', { ideaId: id, chat: Chat.instance });
   }
 
   render() {
-    let ideaList = this.state.matches.map((data) => {
-      return ({ name: data.title, loc: data.localization, color: '#367abc', image: data.image, onClick: () => this.pushMessages(data._id) })
-    });
+    const ideaList = this.state.matches.map(data => ({
+      name: data.title, loc: data.localization, color: '#367abc', image: data.image, onClick: () => this.pushMessages(data._id),
+    }));
     return (
 
       <ScrollView style={styles.container}>
@@ -34,12 +62,18 @@ class Matches extends React.Component {
           style={styles.gridView}
           renderItem={item => (
             <TouchableOpacity onPress={() => item.onClick()}>
-              <View style={[styles.itemContainer, { flex: 1, flexDirection: 'row', justifyContent: 'space-between', backgroundColor: item.color }]}>
+              <View style={[styles.itemContainer, {
+                flex: 1, flexDirection: 'row', justifyContent: 'space-between', backgroundColor: item.color,
+              }]}
+              >
                 <Image
                   style={{ width: 120, height: 120 }}
                   source={{ uri: item.image }}
                 />
-                <View style={[styles.itemContainer, { flex: 1, flexDirection: 'column', justifyContent: 'space-between', backgroundColor: item.color }]}>
+                <View style={[styles.itemContainer, {
+                  flex: 1, flexDirection: 'column', justifyContent: 'space-between', backgroundColor: item.color,
+                }]}
+                >
                   <Text style={styles.itemName}>{item.name}</Text>
                   <Text style={[styles.itemName, { fontSize: 15 }]}>{item.loc}</Text>
                 </View>
@@ -52,46 +86,7 @@ class Matches extends React.Component {
       </ScrollView>
     );
   }
-
-  componentDidMount = () => {
-    fetch(`http://192.168.83.101:3001/login?login=${this.props.user.login}&password=${this.props.user.password}`, '')
-      .then((response) => {
-        if (response.ok) {
-          return response.json()
-        }
-        throw new Error('Wrong credentials')
-      })
-      .then((response) => {
-        this.setState({
-          matches: [...response.matches, ...response.ideas]
-        })
-      })
-      .catch((error) => {
-        Alert.alert(
-          '',
-          'Error: ' + error.message,
-          [
-            { text: 'OK', onPress: () => console.log('OK Pressed') },
-          ],
-          { cancelable: false }
-        )
-      })
-  }
-
-  pushMessages(id) {
-      const { navigate } = this.props.navigation;
-      navigate('ChatComponent', {ideaId: id, chat: Chat.instance})
-  }
 }
-
-const mapStateToProps = state => ({
-  user: {
-    login: state.login,
-    password: state.password
-  }
-})
-
-export default connect(mapStateToProps)(Matches)
 
 const styles = StyleSheet.create({
   gridView: {
@@ -110,7 +105,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#fff',
     fontWeight: '600',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   itemCode: {
     fontWeight: '600',
@@ -119,5 +114,5 @@ const styles = StyleSheet.create({
   },
   container: {
 
-  }
+  },
 });

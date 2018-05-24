@@ -1,65 +1,54 @@
-import React, { Component } from 'react';
-import { Text, TextInput, View, Button, StyleSheet } from 'react-native';
-import { connect } from 'react-redux';
-import { atLogin } from '../actions/appActions'
-import { Chat } from '../Chat'
+import React from 'react'
+import { Text, TextInput, View, Button, StyleSheet } from 'react-native'
+import { Chat } from '../utils/chat'
+import API from '../utils/api'
 
 
-
-class LoginPanel extends Component {
+export default class LoginPanel extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      login: "maks",
-      password: "ala",
-      errorMessage: "",
+      login: 'maks',
+      password: 'ala',
+      errorMessage: '',
     }
   }
 
   handleSubmit = () => {
-    fetch(`http://192.168.83.101:3001/login?login=${this.state.login}&password=${this.state.password}`, '')
-    .then((response) => {
-      if(response.ok){
-        return response.json()
-      }
-      throw new Error('Wrong credentials')
-    })
-    .then((response) => {
-      const { navigate } = this.props.navigation;
-      this.populateStore(response);
-      new Chat(this.state.login, this.state.password, () => {console.log("succes")}, () => {console.log("error")})
-      navigate('App')
-    })
-    .catch((error) => {
-      this.handleWrongCredentials(error)
-    })
+    API.createInstance(this.state.login, this.state.password)
+      .login()
+      .then(() => {
+        const { navigate } = this.props.navigation;
+        Chat.createInstance(this.state.login, this.state.password, () => { console.log('succes'); }, () => { console.log('error'); });
+        navigate('App');
+      })
+      .catch((error) => {
+        this.handleWrongCredentials(error);
+      });
   }
 
   handleWrongCredentials = (error) => {
     this.setState({
-      errorMessage: error.message
-    })
-  }
-
-  populateStore = (data) => {
-    console.log(data)
-    this.props.atLogin({
-      password: this.state.password,
-      login: this.state.login,
-      matches: data.matches,
-      ideas: data.ideas
-    })
+      errorMessage: error.message,
+    });
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Text>Login</Text>
-        <TextInput style={styles.input} onChangeText={(text) => this.setState({ login: text })} 
-          value={this.state.login} />
+        <TextInput
+          style={styles.input}
+          onChangeText={text => this.setState({ login: text })}
+          value={this.state.login}
+        />
         <Text>Password</Text>
-        <TextInput secureTextEntry={true} style={styles.input} onChangeText={(text) => this.setState({ password: text })}
-          value={this.state.password} />
+        <TextInput
+          secureTextEntry
+          style={styles.input}
+          onChangeText={text => this.setState({ password: text })}
+          value={this.state.password}
+        />
         <Button
           title="Login"
           onPress={this.handleSubmit}
@@ -69,10 +58,6 @@ class LoginPanel extends Component {
     );
   }
 }
-
-const mapStateToProps = state => ({});
-
-export default connect(mapStateToProps, { atLogin })(LoginPanel)
 
 const styles = StyleSheet.create({
   container: {
@@ -85,5 +70,5 @@ const styles = StyleSheet.create({
     height: 40,
   },
   errMsg: {
-  }
-});
+  },
+})

@@ -10,17 +10,22 @@
   "dependencies": {
     "@expo/samples": "2.1.1",
     "expo": "^27.0.1",
+    "js-sha256": "^0.9.0",
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-27.0.0.tar.gz",
     "react-native-gifted-chat": "^0.4.3",
     "react-native-super-grid": "^2.3.1",
     "react-native-swipe-cards": "^0.1.1",
     "react-navigation": "2.0.0",
-    "react-redux": "^5.0.7",
-    "redux": "^4.0.0",
     "socket.io-client": "^2.1.0"
   },
   "devDependencies": {
+    "babel-eslint": "^8.2.3",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.8.2",
     "jest-expo": "^27.0.0"
   }
 }

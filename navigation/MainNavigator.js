@@ -1,14 +1,13 @@
-import React from 'react';
 import {
   createSwitchNavigator,
   createStackNavigator,
 } from 'react-navigation';
-import LoginPanel from '../components/LoginPanel'
-import CardList from '../components/CardList'
-import Matches from '../screens/Matches'
-import SwipeIdeas from '../screens/SwipeIdeas'
+import LoginPanel from '../components/LoginPanel';
+import CardList from '../components/CardList';
+import Matches from '../screens/Matches';
+import SwipeIdeas from '../screens/SwipeIdeas';
 import AddProject from '../screens/AddProject';
-import {ChatComponent} from '../components/ChatComponent'
+import ChatComponent from '../components/ChatComponent';
 
 
 const AppStack = createStackNavigator({
@@ -16,16 +15,18 @@ const AppStack = createStackNavigator({
   Matches,
   Create: AddProject,
   SwipeIdeas,
-  ChatComponent
-})
+  ChatComponent,
+});
 const AuthStack = createStackNavigator({
   Login: LoginPanel,
-})
+});
 
-export default createSwitchNavigator ({
-  App: AppStack,
-  Auth: AuthStack
-},
-{
-  initialRouteName: 'Auth'
-})
+export default createSwitchNavigator(
+  {
+    App: AppStack,
+    Auth: AuthStack,
+  },
+  {
+    initialRouteName: 'Auth',
+  },
+)
