@@ -45,6 +45,7 @@ function NoMoreCards(props) {
 export default class SwipeIdeas extends React.Component {
   static navigationOptions = {
     title: 'Swipe!',
+    headerStyle: { backgroundColor: '#00b3b3' }
   };
 
   constructor(props) {
@@ -70,20 +71,9 @@ export default class SwipeIdeas extends React.Component {
     API.getInstance().addSwipe(card.id, 'left')
   }
 
-  cardRemoved(index) {
-    console.log(`The index is ${index}`);
-
-    const CARD_REFRESH_LIMIT = 3
-
-    if (this.state.cards.length - index <= CARD_REFRESH_LIMIT + 1) {
-      console.log(`There are only ${this.state.cards.length - index - 1} cards left.`);
-    }
-  }
-
   render() {
     return (
       <View styles={{ height: '100%' }}>
-        <Image style={styles.backgroundImage} source={require('../assets/images/background.png')} />
         <ScrollView style={styles.container}>
           <SwipeCards
             cards={this.state.cards}
@@ -97,7 +87,6 @@ export default class SwipeIdeas extends React.Component {
             nopeText="Nope"
             handleYup={this.handleYup}
             handleNope={this.handleNope}
-            cardRemoved={this.cardRemoved.bind(this)}
           />
         </ScrollView>
 
@@ -111,10 +100,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
     alignItems: 'center',
-    borderRadius: 30,
+    borderRadius: 15,
     overflow: 'hidden',
     borderColor: 'grey',
-    backgroundColor: 'rgba(15, 208, 183, 0.1)',
+    backgroundColor: '#f8da87', //'#f8856c', //'#009393',
+    color: '#ffffff',
     borderWidth: 0,
     elevation: 1,
     padding: 0,
@@ -146,11 +136,11 @@ const styles = StyleSheet.create({
   },
   container: {
     height: '100%',
-    backgroundColor: 'transparent',
-
+    backgroundColor: '#008080'
   },
   cardContainer: {
     height: '100%',
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    color: '#ffffff',
   },
 });

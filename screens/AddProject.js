@@ -6,13 +6,14 @@ import {
   Alert,
   Image,
   TextInput,
-  Button,
+  TouchableOpacity,
 } from 'react-native';
 import API from '../utils/api'
 
 export default class AddProject extends React.Component {
   static navigationOptions = {
     title: 'Add idea',
+    headerStyle: { backgroundColor: '#00b3b3' }
   };
 
   constructor(props) {
@@ -57,14 +58,12 @@ export default class AddProject extends React.Component {
 
   render() {
     return (
-      <View style={[styles.container, { justifyContent: 'space-between' }]}>
-        <Image style={styles.backgroundImage} source={require('../assets/images/background.png')} />
-
-        <View style={styles.itemContainer}>
+      <View style={styles.container}>
+        <View>
           <Text style={styles.itemName}>Title</Text>
           <TextInput
             underlineColorAndroid="transparent"
-            style={[styles.input, { height: 40 }]}
+            style={styles.input}
             onChangeText={title => this.setState({ title })}
             value={this.state.title}
             placeholder="Name your idea"
@@ -72,7 +71,7 @@ export default class AddProject extends React.Component {
         </View>
 
 
-        <View style={[styles.itemContainer, { height: 360 }]}>
+        <View style={{ height: 360 }}>
           <Text style={styles.itemName}>Description</Text>
           <TextInput
             underlineColorAndroid="transparent"
@@ -86,20 +85,17 @@ export default class AddProject extends React.Component {
 
         </View>
 
-        <Button
+        <TouchableOpacity
           onPress={this.handleAdd}
-          title="Register idea!"
-          color="rgba(255, 84, 107, 0.8)"
-        />
+          style={styles.button}
+        >
+          <Text style={{color: '#ffffff'}}>ADD IDEA</Text>
+        </TouchableOpacity>
       </View>)
   }
 }
 
 const styles = StyleSheet.create({
-  gridView: {
-    paddingTop: 25,
-    flex: 1,
-  },
   inputView: {
     backgroundColor: 'rgba(0,0,0,0)',
     position: 'absolute',
@@ -108,29 +104,22 @@ const styles = StyleSheet.create({
     right: 5,
   },
   input: {
-    height: 36,
-    padding: 10,
-    marginTop: 20,
-    marginLeft: 10,
-    marginRight: 10,
+    padding: 12,
+    marginTop: 10,
+    width: '100%',
     fontSize: 18,
     borderWidth: 0,
     borderRadius: 10,
-    backgroundColor: 'transparent',
+    // borderColor: '#005454',
+    backgroundColor: '#009393', //'#f2f2f2',
     textAlign: 'center',
+    color: '#ffffff'
   },
   container: {
     justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,0)',
+    backgroundColor: '#008080',
     height: '100%',
-
-  },
-  itemContainer: {
-    borderRadius: 30,
-    marginTop: 20,
-    height: 90,
-    backgroundColor: 'rgba(255, 84, 107, 0.1)',
-
+    padding: 10
   },
   itemName: {
     fontSize: 20,
@@ -146,5 +135,14 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     position: 'absolute',
+  },
+  button: {
+    marginTop: 10,
+    color: '#ffffff',
+    alignItems: 'center',
+    padding: 15,
+    borderRadius: 10,
+    width: '100%',
+    backgroundColor: '#f8856c', //'#f8da87', //'#ff9f58',
   },
 });

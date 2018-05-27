@@ -1,5 +1,6 @@
 import { sha256 } from 'js-sha256';
 import { serverUrl } from '../config';
+import { Chat } from './chat';
 
 export default class API {
   static instance = null;
@@ -20,27 +21,16 @@ export default class API {
     this.chat = null;
   }
 
-  // TODO: add logic for chat / sockets
-  getSocket() {
+  getChat() {
     return this.chat;
   }
 
   apiFetch(path, type, body = '') {
-    // TODO: change 'a' to token
-    // return fetch(`http://${serverUrl}/${path}`, {
-    //   method: type,
-    //   headers: {
-    //     Accept: 'application/json',
-    //     Authorization: `${this.user}:${this.token}`,
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body,
-    // })
     return fetch(`http://${serverUrl}/${path}`, {
       method: type,
       headers: {
         Accept: 'application/json',
-        Authorization: `${this.user}:a`,
+        Authorization: `${this.user}:${this.token}`,
         'Content-Type': 'application/json',
       },
       body,
@@ -56,7 +46,10 @@ export default class API {
         throw new Error('Wrong credentials')
       })
       .then((json) => {
-        this.token = json.token;
+        const token = json.token;
+        this.token = token;
+        this.chat = new Chat(this.user, token)
+        this.chat.connect(() => console.log('Connected to chat'), () => console.log('Unable to connect to chat'))
         return json;
       })
   }

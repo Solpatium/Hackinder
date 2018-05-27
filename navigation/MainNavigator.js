@@ -16,7 +16,12 @@ const AppStack = createStackNavigator({
   Create: AddProject,
   SwipeIdeas,
   ChatComponent,
-})
+}, {
+  header: {
+      style: { backgroundColor: '#336060' },
+      titleStyle: { color: '#336060' },
+  }
+});
 
 const AuthStack = createSwitchNavigator({
   Login: { screen: LoginPanel, header: { visible: false } },
@@ -29,5 +34,7 @@ export default createSwitchNavigator(
   },
   {
     initialRouteName: 'Auth',
+    headerStyle: { backgroundColor: '#336060' },
+    headerTitleStyle: { color: '#336060' },
   },
 )

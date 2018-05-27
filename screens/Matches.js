@@ -9,6 +9,7 @@ import API from '../utils/api';
 export default class Matches extends React.Component {
   static navigationOptions = {
     title: 'Your matches',
+    headerStyle: { backgroundColor: '#00b3b3' }
   };
 
   constructor(props) {
@@ -45,16 +46,16 @@ export default class Matches extends React.Component {
 
   pushMessages(id) {
     const { navigate } = this.props.navigation;
-    navigate('ChatComponent', { ideaId: id, chat: Chat.instance });
+    const chat = API.getInstance().getChat();
+    navigate('ChatComponent', { ideaId: id, chat });
   }
 
   render() {
     const ideaList = this.state.matches.map(data => ({
-      name: data.title, loc: data.localization, color: 'rgba(255, 255, 255, 0.15)', image: data.image, onClick: () => this.pushMessages(data._id),
+      name: data.title, loc: data.localization, image: data.image, onClick: () => this.pushMessages(data._id),
     }));
     return (
       <View>
-        <Image style={styles.backgroundImage} source={require('../assets/images/background.png')} />
         <ScrollView style={styles.container}>
           <GridView
             itemDimension={Dimensions.get('window').width - 75}
@@ -63,7 +64,7 @@ export default class Matches extends React.Component {
             renderItem={item => (
               <TouchableOpacity onPress={() => item.onClick()}>
                 <View style={[styles.itemContainer, {
-                flex: 1, flexDirection: 'row', justifyContent: 'space-between', backgroundColor: item.color,
+                flex: 1, flexDirection: 'row', justifyContent: 'space-between'
               }]}
                 >
                   <Image
@@ -93,17 +94,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   itemContainer: {
-    borderRadius: 30,
+    borderRadius: 10,
     padding: 10,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     height: 120,
-    backgroundColor: 'rgba(11, 213, 222, 0.2)',
+    backgroundColor: '#009393',
+    alignItems: 'flex-start',
 
   },
   itemName: {
     fontSize: 20,
+    paddingLeft: 10,
     color: '#fff',
     fontWeight: '600',
     alignItems: 'center',
@@ -114,15 +117,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   cardImage: {
-    borderRadius: 10,
     flex: 1,
-    width: null,
-    height: null,
-    resizeMode: 'contain',
+    width: 100,
+    height: 100,
+    // resizeMode: 'contain',
   },
   container: {
     height: '100%',
-    backgroundColor: 'transparent',
+    backgroundColor: '#008080',
   },
   backgroundImage: {
     flex: 1,

@@ -8,7 +8,7 @@ export default class LoginPanel extends React.Component {
     super(props);
     this.state = {
       login: 'przemek',
-      password: null,
+      password: 'ala',
       errorMessage: '',
     }
   }
@@ -18,7 +18,6 @@ export default class LoginPanel extends React.Component {
       .login()
       .then(() => {
         const { navigate } = this.props.navigation;
-        Chat.createInstance(this.state.login, this.state.password, () => { console.log('succes'); }, () => { console.log('error'); });
         navigate('App');
       })
       .catch((error) => {
@@ -35,17 +34,18 @@ export default class LoginPanel extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image style={styles.backgroundImage} source={require('../assets/images/background.png')} />
+        <Image  resizeMode="contain" style={styles.logo} source={require('../assets/images/logo.png')} />
         <View style={styles.itemContainer}>
           <TextInput
             underlineColorAndroid="transparent"
+            color='#ffffff'
             style={styles.input}
             onChangeText={text => this.setState({ login: text })}
             value={this.state.login}
             placeholder="login"
           />
           <TextInput
-            secureTextEntry
+            secureTextEntry={true}
             underlineColorAndroid="transparent"
             style={styles.input}
             onChangeText={text => this.setState({ password: text })}
@@ -55,7 +55,7 @@ export default class LoginPanel extends React.Component {
 
           <TouchableOpacity onPress={this.handleSubmit}>
             <View style={styles.button}>
-              <Text>LOGIN</Text>
+              <Text style={{color: '#ffffff'}}>LOGIN</Text>
             </View>
 
           </TouchableOpacity>
@@ -70,48 +70,53 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
-    backgroundColor: '#9fc7d1',
+    backgroundColor: '#008080',
     height: '100%',
   },
   input: {
-    height: 40,
-    padding: 10,
-    marginTop: 20,
-    marginLeft: 10,
-    marginRight: 10,
-    width: 150,
+    padding: 12,
+    marginTop: 10,
+    width: 200,
     fontSize: 18,
     borderWidth: 0,
     borderRadius: 10,
-    backgroundColor: 'transparent',
+    // borderColor: '#005454',
+    backgroundColor: '#009393', //'#f2f2f2',
     textAlign: 'center',
+    color: '#ffffff'
   },
   label: {
     fontSize: 20,
-    color: '#000000',
+    color: '#ffffff',
     fontWeight: '600',
     textAlign: 'center',
   },
   button: {
+    marginTop: 10,
+    color: '#ffffff',
     alignItems: 'center',
-    padding: 10,
+    padding: 15,
     borderRadius: 10,
-    width: 175,
-    backgroundColor: 'rgba(255, 84, 107, 0.8)',
-
+    width: 200,
+    backgroundColor: '#f8856c', //'#f8da87', //'#ff9f58',
   },
-  backgroundImage: {
-    flex: 1,
-    position: 'absolute',
+  logo: {
+    flexGrow:1,
+    marginTop: 50,
+    height:200,
+    width:180,
+    alignItems: 'center',
+    justifyContent:'center'
   },
   itemContainer: {
-    borderRadius: 30,
     marginTop: 20,
     justifyContent: 'center',
-    height: 200,
-    alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    // alignItems: 'center',
+    // height: 400,
+    flexGrow:2,
+    // backgroundColor: 'rgba(255, 255, 255, 0.2)',
 
   },
   errMsg: {},
